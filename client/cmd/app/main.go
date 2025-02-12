@@ -1,22 +1,27 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"log"
 	"net"
+	"os"
 )
 
 func main() {
-	dealer, err := net.Dial("tcp", ":8080")
+	conn, err := net.Dial("tcp", ":8080")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer dealer.Close()
+	defer conn.Close()
 
-	for {
-		// TODO:описать логику
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		text := scanner.Text()
+
+		fmt.Fprintln(conn, text)
+
+		response, _ := bufio.NewReader(conn).ReadString('\n')
+		log.Println("response:", response)
 	}
-}
-
-func Handler(conn net.Conn) {
-	panic("Not Implemented")
 }
