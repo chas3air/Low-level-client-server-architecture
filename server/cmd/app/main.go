@@ -13,11 +13,11 @@ import (
 func main() {
 	cfg := config.MustLoad()
 
-	logger := logger.SetupLogger(cfg.Env)
+	log := logger.SetupLogger(cfg.Env)
 
-	logger.Info("starting application", slog.Any("config:", cfg))
+	log.Info("starting application", slog.Any("config:", cfg))
 
-	application := app.New(logger, cfg.Grpc.Port)
+	application := app.New(log, cfg.Grpc.Port)
 
 	go func() {
 		application.GRPCServer.MustRun()
@@ -29,5 +29,5 @@ func main() {
 	<-stop
 
 	application.GRPCServer.Stop()
-	logger.Info("application stopped")
+	log.Info("application stopped")
 }

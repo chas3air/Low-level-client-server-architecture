@@ -20,6 +20,7 @@ type GrpcConfig struct {
 }
 
 func MustLoad() *Config {
+	//configPath := "./../../config/local.yaml"
 	configPath := fetchConfigPath()
 	if configPath == "" {
 		panic("config path is empty")

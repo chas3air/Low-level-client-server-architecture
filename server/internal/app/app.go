@@ -3,7 +3,6 @@ package app
 import (
 	"log/slog"
 	grpcapp "server/internal/app/grpc"
-	"server/internal/domain/interfaces"
 	"server/internal/services/usersmanager"
 	"server/internal/storage/mock"
 )
@@ -13,7 +12,7 @@ type App struct {
 }
 
 func New(log *slog.Logger, port int) *App {
-	var storage interfaces.Storage = mock.New(log)
+	storage := mock.New(log)
 	usersmanager := usersmanager.New(log, storage)
 
 	grpcapp := grpcapp.New(log, usersmanager, port)
