@@ -1,2 +1,6 @@
 env: "local"
-port: 8080
+expiration_time: 10s
+
+grpc:
+  port: 50051
+  timeout: 10h

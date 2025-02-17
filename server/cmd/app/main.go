@@ -1,37 +1,33 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"log"
-	"net"
+	"log/slog"
 	"os"
+	"os/signal"
+	"server/internal/app"
+	"server/pkg/config"
+	"server/pkg/lib/logger"
+	"syscall"
 )
 
 func main() {
-	l, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer l.Close()
+	cfg := config.MustLoad()
 
-	//var controller routes.CustomersController = &routes.CustomersManager{}
+	logger := logger.SetupLogger(cfg.Env)
 
-	for {
-		conn, err := l.Accept()
-		if err != nil {
-			fmt.Println("Error:", err)
-			continue
-		}
+	logger.Info("starting application", slog.Any("config:", cfg))
 
-		go Handler(conn)
-	}
-}
+	application := app.New(logger, cfg.Grpc.Port)
 
-func Handler(conn net.Conn) {
-	scanner := bufio.NewScanner(conn)
-	for scanner.Scan() {
-		fmt.Fprintf(os.Stdout, "%s\n", scanner.Text())
-	}
-	defer conn.Close()
+	go func() {
+		application.GRPCServer.MustRun()
+	}()
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+
+	<-stop
+
+	application.GRPCServer.Stop()
+	logger.Info("application stopped")
 }
