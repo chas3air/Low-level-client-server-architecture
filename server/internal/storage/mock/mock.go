@@ -30,17 +30,17 @@ func (m *MockStorage) GetUserById(id uuid.UUID) (models.User, error) {
 }
 
 // GetUsersByEmail implements interfaces.Storage.
-func (m *MockStorage) GetUsersByEmail(email string) (models.User, error) {
+func (m *MockStorage) GetUserByEmail(email string) (models.User, error) {
 	panic("unimplemented")
 }
 
 // Insert implements interfaces.Storage.
-func (m *MockStorage) Insert(user models.User) (models.User, error) {
+func (m *MockStorage) Insert(user models.User) error {
 	panic("unimplemented")
 }
 
 // Update implements interfaces.Storage.
-func (m *MockStorage) Update(id uuid.UUID, user models.User) (models.User, error) {
+func (m *MockStorage) Update(id uuid.UUID, user models.User) error {
 	panic("unimplemented")
 }
 
