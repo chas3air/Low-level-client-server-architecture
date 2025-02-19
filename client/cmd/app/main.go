@@ -1,27 +1,27 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"log"
-	"net"
-	"os"
+	"client/internal/app"
+	usersservice "client/internal/service"
+	"client/internal/storage/server"
+	"client/pkg/config"
+	"client/pkg/lib/logger"
+	"log/slog"
 )
 
 func main() {
-	conn, err := net.Dial("tcp", ":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer conn.Close()
+	cfg := config.MustLoad()
 
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		text := scanner.Text()
+	log := logger.SetupLogger(cfg.Env)
 
-		fmt.Fprintln(conn, text)
+	log.Info("application config", slog.Any("config:", cfg))
 
-		response, _ := bufio.NewReader(conn).ReadString('\n')
-		log.Println("response:", response)
-	}
+	storage := server.New(log)
+	userService := usersservice.New(log, storage)
+
+	application := app.New(log, userService, cfg.Port, cfg.ExpirationTime)
+
+	application.Start()
+
+	log.Info("Exit")
 }
