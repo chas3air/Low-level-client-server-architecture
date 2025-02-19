@@ -16,7 +16,7 @@ func main() {
 
 	log.Info("application config", slog.Any("config:", cfg))
 
-	storage := server.New(log)
+	storage := server.New(log, cfg.Host, cfg.Port)
 	userService := usersservice.New(log, storage)
 
 	application := app.New(log, userService, cfg.Port, cfg.ExpirationTime)

@@ -1,4 +1,4 @@
 env: "local"
 host: "server"
 port: 50051
-expiration_time: 10s
+expiration_time: 5s
