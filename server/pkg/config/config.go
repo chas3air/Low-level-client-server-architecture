@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"log"
 	"os"
 	"time"
 
@@ -21,6 +22,9 @@ type GrpcConfig struct {
 
 func MustLoad() *Config {
 	//configPath := "./../../config/local.yaml"
+	dir, _ := os.Getwd()
+	log.Println("dir", dir)
+
 	configPath := fetchConfigPath()
 	if configPath == "" {
 		panic("config path is empty")

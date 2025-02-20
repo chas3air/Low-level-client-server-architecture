@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  c_s_net:
+
+services:
+  client:
+    build: 
+      context: ./client
+    container_name: client
+    networks:
+      - c_s_net
+    depends_on:
+      - server
+
+  server:
+    build: 
+      context: ./server
+    container_name: server
+    networks:
+      - c_s_net
+    ports:
+      - 6000:50051
+    environment:
+      CONFIG_PATH: /app/config/local.yaml
+    depends_on:
+      - psql
+
+  psql:
+    build:
+      context: ./database/psql
+    container_name: psql
+    networks:
+      - c_s_net
+    ports:
+      - 5000:5432
+    environment:
+      POSTGRES_PASSWORD: 123

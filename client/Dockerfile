@@ -33,4 +33,4 @@ WORKDIR /
 EXPOSE 12016
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
-# ENTRYPOINT ["./cli", "--config=./app/config/local.yaml"]
+# CMD ["./cli", "--config=/app/config/local.yaml"]
