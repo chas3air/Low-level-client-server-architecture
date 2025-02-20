@@ -27,7 +27,6 @@ func New(log *slog.Logger, storage storage.ServerUserFetcher) *UserService {
 	}
 }
 
-// GetUsers implements server.ServerUserFetcher.
 func (u *UserService) GetUsers(ctx context.Context) ([]models.User, error) {
 	const op = "service.getUsers"
 	log := u.log.With(
@@ -44,7 +43,6 @@ func (u *UserService) GetUsers(ctx context.Context) ([]models.User, error) {
 	return users, nil
 }
 
-// GetUserById implements server.ServerUserFetcher.
 func (u *UserService) GetUserById(ctx context.Context, uid uuid.UUID) (models.User, error) {
 	const op = "services.userManager.GetUserById"
 	log := u.log.With(slog.String("operation", op))
@@ -65,7 +63,6 @@ func (u *UserService) GetUserById(ctx context.Context, uid uuid.UUID) (models.Us
 	return user, nil
 }
 
-// GetUserByEmail implements server.ServerUserFetcher.
 func (u *UserService) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	const op = "services.userManager.GetUserByEmail"
 	log := u.log.With(slog.String("operation", op))
@@ -86,7 +83,6 @@ func (u *UserService) GetUserByEmail(ctx context.Context, email string) (models.
 	return user, nil
 }
 
-// Insert implements server.ServerUserFetcher.
 func (u *UserService) Insert(ctx context.Context, user models.User) error {
 	const op = "services.userManager.Insert"
 	log := u.log.With(slog.String("operation", op))
@@ -109,7 +105,6 @@ func (u *UserService) Insert(ctx context.Context, user models.User) error {
 	return nil
 }
 
-// Update implements server.ServerUserFetcher.
 func (u *UserService) Update(ctx context.Context, uid uuid.UUID, user models.User) error {
 	const op = "services.userManager.Update"
 	log := u.log.With(slog.String("operation", op))

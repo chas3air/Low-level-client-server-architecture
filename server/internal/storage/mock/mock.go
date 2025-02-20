@@ -22,7 +22,6 @@ func New(log *slog.Logger) *MockStorage {
 	}
 }
 
-// GetUsers implements storage.Storage.
 func (m *MockStorage) GetUsers(ctx context.Context) ([]models.User, error) {
 	const op = "storage.mock.GetUsers"
 	m.log.Info("Fetching users", slog.String("operation", op), slog.String("error", "nil"))
@@ -30,7 +29,6 @@ func (m *MockStorage) GetUsers(ctx context.Context) ([]models.User, error) {
 	return m.users, nil
 }
 
-// GetUserById implements storage.Storage.
 func (m *MockStorage) GetUserById(ctx context.Context, id uuid.UUID) (models.User, error) {
 
 	const op = "storage.mock.GetUserById"
@@ -51,7 +49,6 @@ func (m *MockStorage) GetUserById(ctx context.Context, id uuid.UUID) (models.Use
 	return models.User{}, err
 }
 
-// GetUserByEmail implements storage.Storage.
 func (m *MockStorage) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	const op = "storage.mock.GetUserByEmail"
 	m.log.Info("Fetching user by email", slog.String("operation", op), slog.String("email", email), slog.String("error", "nil"))
@@ -71,7 +68,6 @@ func (m *MockStorage) GetUserByEmail(ctx context.Context, email string) (models.
 	return models.User{}, err
 }
 
-// Insert implements storage.Storage.
 func (m *MockStorage) Insert(ctx context.Context, user models.User) error {
 	const op = "storage.mock.Insert"
 	m.log.Info("Inserting user", slog.String("operation", op), slog.Any("additional info", []map[string]interface{}{
@@ -86,7 +82,6 @@ func (m *MockStorage) Insert(ctx context.Context, user models.User) error {
 	return nil
 }
 
-// Update implements storage.Storage.
 func (m *MockStorage) Update(ctx context.Context, id uuid.UUID, user models.User) error {
 	const op = "storage.mock.Update"
 	m.log.Info("Updating user", slog.String("operation", op), slog.String("userId", id.String()), slog.Any("additional info", []map[string]interface{}{
@@ -108,7 +103,6 @@ func (m *MockStorage) Update(ctx context.Context, id uuid.UUID, user models.User
 	return err
 }
 
-// Delete implements storage.Storage.
 func (m *MockStorage) Delete(ctx context.Context, id uuid.UUID) (models.User, error) {
 	const op = "storage.mock.Delete"
 	m.log.Info("Deleting user", slog.String("operation", op), slog.String("userId", id.String()), slog.String("error", "nil"))

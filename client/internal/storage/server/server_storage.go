@@ -11,6 +11,7 @@ import (
 
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type ServerUsersStorage struct {
@@ -27,12 +28,11 @@ func New(log *slog.Logger, host string, port int) *ServerUsersStorage {
 	}
 }
 
-// GetUsers implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) GetUsers(ctx context.Context) ([]models.User, error) {
 	const op = "storage.server.getUsers"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))
@@ -60,12 +60,11 @@ func (s ServerUsersStorage) GetUsers(ctx context.Context) ([]models.User, error)
 	return res_users, nil
 }
 
-// GetUserById implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) GetUserById(ctx context.Context, uid uuid.UUID) (models.User, error) {
 	const op = "storage.server.getUserById"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))
@@ -91,12 +90,11 @@ func (s ServerUsersStorage) GetUserById(ctx context.Context, uid uuid.UUID) (mod
 	return user, nil
 }
 
-// GetUserByEmail implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	const op = "storage.server.getUserByEmail"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))
@@ -122,12 +120,11 @@ func (s ServerUsersStorage) GetUserByEmail(ctx context.Context, email string) (m
 	return user, nil
 }
 
-// Insert implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) Insert(ctx context.Context, user models.User) error {
 	const op = "storage.server.insert"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))
@@ -147,12 +144,11 @@ func (s ServerUsersStorage) Insert(ctx context.Context, user models.User) error 
 	return nil
 }
 
-// Update implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) Update(ctx context.Context, uid uuid.UUID, user models.User) error {
 	const op = "storage.server.update"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))
@@ -176,9 +172,9 @@ func (s ServerUsersStorage) Update(ctx context.Context, uid uuid.UUID, user mode
 // Delete implements interfaces.ServerUserFetcher.
 func (s ServerUsersStorage) Delete(ctx context.Context, uid uuid.UUID) (models.User, error) {
 	const op = "storage.server.delete"
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		fmt.Sprintf("%s:%d", s.ServerHost, s.ServerPort),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		s.log.Error(fmt.Sprintf("%s: %v", op, err))

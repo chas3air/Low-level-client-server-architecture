@@ -10,9 +10,8 @@ import (
 )
 
 type Config struct {
-	Env            string        `yaml:"env" env-default:"local"`
-	Grpc           GrpcConfig    `yaml:"grpc"`
-	ExpirationTime time.Duration `yaml:"expiration_time"`
+	Env  string     `yaml:"env" env-default:"local"`
+	Grpc GrpcConfig `yaml:"grpc"`
 }
 
 type GrpcConfig struct {
@@ -21,7 +20,6 @@ type GrpcConfig struct {
 }
 
 func MustLoad() *Config {
-	//configPath := "./../../config/local.yaml"
 	dir, _ := os.Getwd()
 	log.Println("dir", dir)
 
@@ -34,7 +32,6 @@ func MustLoad() *Config {
 }
 
 func MustLoadPath(configPath string) *Config {
-	// check if file exists
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		panic("config file does not exist: " + configPath)
 	}

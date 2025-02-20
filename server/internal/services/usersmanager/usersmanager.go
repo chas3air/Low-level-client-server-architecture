@@ -27,7 +27,6 @@ func New(log *slog.Logger, storage interfaces.Storage) *UsersManager {
 	}
 }
 
-// GetUsers implements interfaces.Storage.
 func (u *UsersManager) GetUsers(ctx context.Context) ([]models.User, error) {
 	const op = "services.usersmanager.getUsers"
 	log := u.log.With(slog.String("operation", op))
@@ -47,7 +46,6 @@ func (u *UsersManager) GetUsers(ctx context.Context) ([]models.User, error) {
 	return users, nil
 }
 
-// GetUserById implements interfaces.Storage.
 func (u *UsersManager) GetUserById(ctx context.Context, id uuid.UUID) (models.User, error) {
 	const op = "services.usersmanager.getUserById"
 	log := u.log.With(slog.String("operation", op))
@@ -67,7 +65,6 @@ func (u *UsersManager) GetUserById(ctx context.Context, id uuid.UUID) (models.Us
 	return user, nil
 }
 
-// GetUsersByEmail implements interfaces.Storage.
 func (u *UsersManager) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	const op = "services.usersmanager.getUserByEmail"
 	log := u.log.With(slog.String("operation", op))
@@ -87,7 +84,6 @@ func (u *UsersManager) GetUserByEmail(ctx context.Context, email string) (models
 	return user, nil
 }
 
-// Insert implements interfaces.Storage.
 func (u *UsersManager) Insert(ctx context.Context, user models.User) error {
 	const op = "services.usersmanager.insert"
 	log := u.log.With(slog.String("operation", op))
@@ -107,7 +103,6 @@ func (u *UsersManager) Insert(ctx context.Context, user models.User) error {
 	return nil
 }
 
-// Update implements interfaces.Storage.
 func (u *UsersManager) Update(ctx context.Context, id uuid.UUID, user models.User) error {
 	const op = "services.usermanager.update"
 	log := u.log.With(slog.String("op", op))
@@ -127,7 +122,6 @@ func (u *UsersManager) Update(ctx context.Context, id uuid.UUID, user models.Use
 	return nil
 }
 
-// Delete implements interfaces.Storage.
 func (u *UsersManager) Delete(ctx context.Context, id uuid.UUID) (models.User, error) {
 	const op = "services.usermanager.delete"
 	log := u.log.With(slog.String("op", op))

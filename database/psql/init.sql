@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS Users (
     nick VARCHAR(50) NOT NULL
 );
 
--- Insert rows into table 'TableName'
 INSERT INTO Users (email, password, role, nick) VALUES  
 ('test@test.com', '123', 'user', 'nicK'),
 ('admin@admin.com', 'qwerty', 'admin', 'qaz');
